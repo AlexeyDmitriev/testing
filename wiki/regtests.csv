@@ -1,0 +1,13 @@
+admin;1;1;mail@mail.com;Введённое имя участника уже используется. Пожалуйста, выберите другое имя.
+admin;1;2;mail@mail.com;Введённое имя участника уже используется. Пожалуйста, выберите другое имя.
+hrensgory123xxxdfehy;1;2;mail@mail.com;Введённые вами пароли не совпадают.
+hrensgory123xxxdfehy;1;1;mail@mail.com;Контрольная комбинация неверна или не введена.
+hrensgory123xxxdfehy;1;1;;Контрольная комбинация неверна или не введена.
+hrensgory123xxxdfehy;1;1;trash@olo;Контрольная комбинация неверна или не введена.
+hrensgory123xxxdfehy;1;;trash@olo;Введённые вами пароли не совпадают.
+hrensgory123xxxdfehy;;1;trash@olo;Введённые вами пароли не совпадают.
+;1;1;;Вы не указали допустимого имени участника.
+hrensgory123xxxdfehy;;;;Пароль должен состоять не менее чем из 1 символа.
+admin;;;;Введённое имя участника уже используется. Пожалуйста, выберите другое имя.
+ex!mark;1;1;mail@mail.com;Контрольная комбинация неверна или не введена.
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz;1;1;mail@mail.com;Вы не указали допустимого имени участника.
