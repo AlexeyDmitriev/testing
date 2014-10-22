@@ -6,6 +6,7 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+  <component name="IdProvider" IDEtalkID="823C3AC03C39118911B591C6D521B3A6" />
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -29,4 +30,3 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
-
