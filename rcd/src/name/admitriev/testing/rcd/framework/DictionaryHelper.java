@@ -19,6 +19,7 @@ public class DictionaryHelper extends BaseHelper {
 		click(by("dictionary-add"));
 		type(by("dictionary-add-name-field"), dictionaryData.getName());
 		type(by("dictionary-add-description-field"), dictionaryData.getDescription());
+		click(by("dictionary-add-submit"));
 		try {
 			return getText(by("dictionary-add-error"));
 		}
@@ -37,6 +38,7 @@ public class DictionaryHelper extends BaseHelper {
 		app.getNavigationHelper().gotoGroupPage(group);
 		List<DictionaryData> result = new ArrayList<>();
 		for (WebElement element : driver.findElements(by("dictionary-element"))) {
+			if(true)throw new AssertionError(element.getText());
 			DictionaryData dictionaryData = new DictionaryData()
 					.withName(element.findElement(by("dictionary-name")).getText())
 					.withDescription(element.findElement(by("dictionary-description")).getText());

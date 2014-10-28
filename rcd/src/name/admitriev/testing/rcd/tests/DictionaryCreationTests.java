@@ -26,7 +26,7 @@ public class DictionaryCreationTests extends TestBase {
 
 	@Test(dataProvider = "dataProvider")
 	public void testAddingSingleDictionary(DictionaryData data) {
-		String groupName = app.properties.getProperty("");
+		String groupName = app.properties.getProperty("group");
 		app.getGroupHelper().prepareEmptyGroup(groupName);
 		assertEquals(app.getDictionaryHelper().tryAddDictionary(groupName, data), data.getExpectedResult());
 		if(data.getExpectedResult().equals("OK"))

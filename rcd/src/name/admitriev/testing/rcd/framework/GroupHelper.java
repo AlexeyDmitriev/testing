@@ -1,5 +1,6 @@
 package name.admitriev.testing.rcd.framework;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -14,14 +15,25 @@ public class GroupHelper extends BaseHelper {
 	}
 
 	public void removeGroupIfExists(String group) {
+
 		app.getNavigationHelper().gotoGroupsPage();
-		for (WebElement element : driver.findElements(by("group-element"))) {
-			String name = element.findElement(by("group-name")).getText();
-			if (name.equals(group)) {
-				new Actions(driver)
-						.moveToElement(element.findElement(by("trash-button")))
-						.click();
+		while (true) {
+			try {
+				System.out.println("");
+				for (WebElement element : driver.findElements(by("group-element"))) {
+					String name = element.findElement(by("group-name")).getText();
+					if (name.equals(group)) {
+						new Actions(driver)
+								.moveToElement(element.findElement(by("trash-button")))
+								.click()
+								.perform();
+						return;
+					}
+				}
 				return;
+			}
+			catch (StaleElementReferenceException e) {
+				continue;
 			}
 		}
 	}

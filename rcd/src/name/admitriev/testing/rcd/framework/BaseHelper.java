@@ -20,26 +20,7 @@ public class BaseHelper {
 	}
 
 	public void waitFor(By by) {
-		for(int i = 0; i < 100; ++i) {
-			if(isElementPresentAndVisible(by))
-				return;
-			try {
-				Thread.sleep(50);
-			}
-			catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
 
-	private boolean isElementPresentAndVisible(By by) {
-		try {
-			return driver.findElement(by).isDisplayed();
-
-		}
-		catch (NoSuchElementException e) {
-			return false;
-		}
 	}
 
 	protected void type(By by, String input) {
@@ -53,6 +34,7 @@ public class BaseHelper {
 	}
 
 	protected boolean isElementPresent(By by) {
+		waitFor(by);
 		try {
 			driver.findElement(by);
 			return true;
@@ -82,6 +64,8 @@ public class BaseHelper {
 			default:
 				throw new RuntimeException("Wrong locator type");
 		}
+
+
 	}
 
 

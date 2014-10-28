@@ -1,5 +1,6 @@
 package name.admitriev.testing.rcd.framework;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 public class NavigationHelper extends BaseHelper {
@@ -19,12 +20,22 @@ public class NavigationHelper extends BaseHelper {
 	}
 
 	public void gotoGroupPage(String group) {
+
 		gotoGroupsPage();
-		app.getNavigationHelper().gotoGroupsPage();
-		for (WebElement element : driver.findElements(by("group-element"))) {
-			String name = element.findElement(by("group-name")).getText();
-			if (name.equals(group)) {
-				element.findElement(by("group-link")).click();
+		while(true) {
+			try {
+
+				for (WebElement element : driver.findElements(by("group-element"))) {
+					String name = element.findElement(by("group-name")).getText();
+					if (name.equals(group)) {
+						element.findElement(by("group-link")).click();
+						return;
+					}
+				}
+				throw new AssertionError("No group " + group);
+			}
+			catch (StaleElementReferenceException e) {
+
 			}
 		}
 	}

@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 
 public class AppManager {
@@ -27,6 +28,7 @@ public class AppManager {
 			driver = new ChromeDriver();
 		else
 			throw new RuntimeException("Unknown browser");
+		driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
 		baseURL = properties.getProperty("baseURL");
 		driver.get(baseURL);
 	}
