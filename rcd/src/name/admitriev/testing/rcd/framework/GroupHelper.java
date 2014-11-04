@@ -1,5 +1,6 @@
 package name.admitriev.testing.rcd.framework;
 
+import name.admitriev.testing.rcd.data.DictionaryData;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -24,9 +25,10 @@ public class GroupHelper extends BaseHelper {
 					String name = element.findElement(by("group-name")).getText();
 					if (name.equals(group)) {
 						new Actions(driver)
-								.moveToElement(element.findElement(by("trash-button")))
-								.click()
+								.moveToElement(element)
 								.perform();
+						click(by("trash-button"));
+						click(by("confirm-deletion"));
 						return;
 					}
 				}
@@ -41,7 +43,29 @@ public class GroupHelper extends BaseHelper {
 	public void prepareEmptyGroup(String group) {
 		removeGroupIfExists(group);
 		addGroup(group);
-		assertEquals(app.getDictionaryHelper().getDictionariesList(group), Collections.emptyList(), "After group creation it should not have any inner dictionaries");
+		assertEquals(
+				app.getDictionaryHelper().getDictionariesList(group),
+				Collections.emptyList(),
+				"After group creation it should not have any inner dictionaries"
+		);
+	}
+
+
+	public void prepareGroup(String group, int count) {
+
+		prepareEmptyGroup(group);
+		for (int i = 0; i < count; ++i) {
+			app.getDictionaryHelper().addDictionary(
+					group, new DictionaryData().withName("prepared " + (i + 1)).withDescription(
+							""
+					)
+			);
+		}
+		assertEquals(
+				app.getDictionaryHelper().getDictionariesList(group),
+				Collections.emptyList(),
+				"After group creation it should not have any inner dictionaries"
+		);
 	}
 
 	public void addGroup(String group) {

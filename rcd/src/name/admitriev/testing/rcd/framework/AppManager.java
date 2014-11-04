@@ -28,7 +28,8 @@ public class AppManager {
 			driver = new ChromeDriver();
 		else
 			throw new RuntimeException("Unknown browser");
-		driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);
+		driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+		driver.manage().window().maximize();
 		baseURL = properties.getProperty("baseURL");
 		driver.get(baseURL);
 	}
@@ -39,6 +40,8 @@ public class AppManager {
 		}
 		return groupHelper;
 	}
+
+
 
 	public LoginHelper getLoginHelper() {
 		if (loginHelper == null) {
