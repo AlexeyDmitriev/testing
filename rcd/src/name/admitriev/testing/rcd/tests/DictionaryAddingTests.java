@@ -52,6 +52,34 @@ public class DictionaryAddingTests extends TestBase {
 		testAddingDictionary(data);
 	}
 
+	@Test
+	public void testDuplicatedNames() {
+		String groupName = app.properties.getProperty("group");
+		app.getGroupHelper().prepareEmptyGroup(groupName);
+		DictionaryData data = new DictionaryData().withName("1").withExpectedResult("OK");
+		testAddingDictionary(data);
+		testAddingDictionary(data.withExpectedResult("Dictionary " + data.getName() + " already exist"));
+	}
+
+	@Test
+	public void testDuplicatedDescriptions() {
+		String groupName = app.properties.getProperty("group");
+		app.getGroupHelper().prepareEmptyGroup(groupName);
+		DictionaryData data = new DictionaryData().withName("1").withDescription("desc").withExpectedResult("OK");
+		testAddingDictionary(data);
+		testAddingDictionary(data.withName("2"));
+	}
+
+	@Test
+	public void AddDictionaryWithLineBreakInDescription() {
+		String groupName = app.properties.getProperty("group");
+		app.getGroupHelper().prepareEmptyGroup(groupName);
+		DictionaryData data = new DictionaryData().withName("1")
+		                                          .withDescription("linebreak here\nblahblah")
+		                                          .withExpectedResult("OK");
+
+		testAddingDictionary(data);
+	}
 
 
 	public void testAddingDictionary(DictionaryData data) {
@@ -68,14 +96,14 @@ public class DictionaryAddingTests extends TestBase {
 			assertEquals(
 					result,
 					initialList,
-					"After adding there should be exactly one element"
+					"After adding there should has 1 element more: these element"
 			);
 		}
 		else {
 			assertEquals(
 					result,
 					initialList,
-					"If dictionary was not added group should be still empty"
+					"If dictionary was not added group should be still the same"
 			);
 		}
 	}

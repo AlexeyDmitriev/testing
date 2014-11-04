@@ -1,6 +1,7 @@
 package name.admitriev.testing.rcd.framework;
 
 import name.admitriev.testing.rcd.data.DictionaryData;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
@@ -70,6 +71,39 @@ public class DictionaryHelper extends BaseHelper {
 			catch (StaleElementReferenceException e) {
 				continue;
 			}
+		}
+	}
+
+
+	public String editDictionaryName(String groupName, DictionaryData data, String newName) {
+		int index = getDictionariesList(groupName).indexOf(data);
+		return editDictionaryNameByIndex(groupName, index, newName);
+	}
+
+	private String editDictionaryNameByIndex(String groupName, int index, String newName) {
+		++index;
+		while (true) {
+			try {
+				WebElement element = driver.findElement(by("dictionary-edit-row", index));
+				Actions action = new Actions(driver);
+				new Actions(driver).moveToElement(element).perform();
+				click(by("dictionary-edit-symbol", index));
+
+				WebElement field = driver.findElement(by("dictionary-edit-name-field"));
+				field.clear();
+				field.sendKeys(newName);
+				field.sendKeys(Keys.ENTER);
+				break;
+			}
+			catch (StaleElementReferenceException e) {
+				continue;
+			}
+		}
+
+		if (isElementPresent(by("alerts-container"))) {
+			return getText(by("alerts-container"));
+		} else {
+			return "";
 		}
 	}
 }
