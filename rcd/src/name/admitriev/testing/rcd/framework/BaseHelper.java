@@ -44,8 +44,17 @@ public class BaseHelper {
 		}
 	}
 
+	protected By by(String propertyName, Object... args) {
+		String locator = app.properties.getProperty(propertyName);
+		return byLocator(String.format(locator, args));
+	}
+
 	protected By by(String propertyName) {
 		String locator = app.properties.getProperty(propertyName);
+		return byLocator(locator);
+	}
+
+	private By byLocator(String locator) {
 		String[] s = locator.split("=", 2);
 		if (s.length != 2) {
 			throw new RuntimeException("Wrong locator");
@@ -64,7 +73,6 @@ public class BaseHelper {
 			default:
 				throw new RuntimeException("Wrong locator type");
 		}
-
 
 	}
 

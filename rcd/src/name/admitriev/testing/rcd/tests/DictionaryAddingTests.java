@@ -7,12 +7,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
-public class DictionaryCreationTests extends TestBase {
+public class DictionaryAddingTests extends TestBase {
 
 	@DataProvider
 	public Iterator<Object[]> dataProvider() throws IOException {
@@ -52,22 +53,27 @@ public class DictionaryCreationTests extends TestBase {
 	}
 
 
+
 	public void testAddingDictionary(DictionaryData data) {
 		String groupName = app.properties.getProperty("group");
 		List<DictionaryData> initialList = app.getDictionaryHelper().getDictionariesList(groupName);
 
 		assertEquals(app.getDictionaryHelper().tryAddDictionary(groupName, data), data.getExpectedResult());
-		if(data.getExpectedResult().equals("OK")) {
+
+		List<DictionaryData> result = app.getDictionaryHelper().getDictionariesList(groupName);
+		Collections.sort(result);
+		Collections.sort(initialList);
+		if (data.getExpectedResult().equals("OK")) {
 			initialList.add(data);
 			assertEquals(
-					app.getDictionaryHelper().getDictionariesList(groupName),
+					result,
 					initialList,
 					"After adding there should be exactly one element"
 			);
 		}
 		else {
 			assertEquals(
-					app.getDictionaryHelper().getDictionariesList(groupName),
+					result,
 					initialList,
 					"If dictionary was not added group should be still empty"
 			);

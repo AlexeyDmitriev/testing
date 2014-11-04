@@ -2,7 +2,9 @@ package name.admitriev.testing.rcd.framework;
 
 import name.admitriev.testing.rcd.data.DictionaryData;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,6 @@ public class DictionaryHelper extends BaseHelper {
 			return getText(by("dictionary-add-error"));
 		}
 		catch (NoSuchElementException ignored) {
-			if(isElementPresent(by("dictionary-add-name-field")))
-				return "";
 			return "OK";
 		}
 	}
@@ -46,5 +46,30 @@ public class DictionaryHelper extends BaseHelper {
 		}
 		return result;
 
+	}
+
+	public void removeDictionary(String group, String name) {
+		List<DictionaryData> dictionaryDataList = getDictionariesList(group);
+		for(int i = 0; i < dictionaryDataList.size(); ++i) {
+			if(dictionaryDataList.get(i).getName().equals(name)) {
+				removeDictionaryByIndex(group, i);
+			}
+		}
+	}
+
+	private void removeDictionaryByIndex(String group, int n) {
+		++n; // css satrt indicies from 1
+		app.getNavigationHelper().gotoGroupPage(group);
+		while (true) {
+			try {
+				new Actions(driver).moveToElement(driver.findElement(by("dictionary-delete-row", n))).perform();
+				click(by("dictionary-delete-symbol", n));
+				click(by("dictionary-delete-button"));
+				return;
+			}
+			catch (StaleElementReferenceException e) {
+				continue;
+			}
+		}
 	}
 }
